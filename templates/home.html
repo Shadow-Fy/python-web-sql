@@ -1,0 +1,85 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="{% static 'echarts-5.4.3/dist/echarts.js' %}"></script>
+</head>
+<body>
+<nav class="navbar border-2 border-bottom bg-dark navbar-expand-lg bg-body-tertiary">
+    <div class="container-xl">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'Images/logo.svg' %}" alt="Logo" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            Eye
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills me-auto mb-2 mb-lg-0"></ul>
+            <form class="d-flex  mb-2 mb-lg-0" role="search">
+                <a class="btn  btn-outline-secondary bi bi-github" href="https://github.com/Shadow-Fy/python-web-sql"
+                   target="_blank"
+                   style="--bs-btn-padding-y: 6px; --bs-btn-padding-x:
+                   25px; --bs-btn-font-size: 16px; margin: 10px; height: 70%">&#160Source Code</a>
+                <div class="dropdown" style="display: flex;align-items: center ;">
+                    <button type="button" class="btn link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false" style="height: 70%;padding-bottom: 3%;padding-top: 3%">
+                        个人中心
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Action two</a></li>
+                        <li><a class="dropdown-item" href="#">退出登录</a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+<nav class="navbar border-2 border-bottom navbar-expand-lg bg-body-tertiary">
+    <div class="container-xl">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./">
+                        <strong class="bi bi-house-door">&#160Home</strong>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link bi bi-book" href="#">&#160Link</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link bi bi-book" href="./admin_list">&#160管理员</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link bi bi-graph-up" href="/chart/list">&#160数据可视化</a>
+                </li>
+            </ul>
+            <form class="d-flex mb-2 mb-lg-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+    </div>
+</nav>
+<div class="container-xxl"><h1>这是主页</h1></div>
+<div class="container-xxl">
+    <div class="container" style="height: 500px;background-color: #8dffde">主页框</div>
+    <div><br></div>
+    <div class="container" style="float: left;height: 500px;width:55%;background-color: #74eaff "></div>
+    <div class="container" style="float: right;height: 500px;width:40%;background-color: #de83ff "></div>
+</div>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

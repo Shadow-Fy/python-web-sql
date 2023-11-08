@@ -1,0 +1,31 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>数据可视化</title>
+    <link rel="stylesheet" type="text/css" href="../static/CSS/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+<div class="box">
+    <div class="left">
+        <img src="{% static 'Images/loginback.jpg' %}" alt="">
+    </div>
+    <div class="right">
+        <h1>登录</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" id="id_username" class="inputItem" placeholder="你的账户" required value="{{ username }}">
+            <input type="password" name="password" id="id_password" class="inputItem" placeholder="你的密码" required value="{{ password }}">
+            <a href="#" class="forgetPassword">忘记密码？</a>
+            <input type="submit" class="btn" value="登录">
+            {#            <button type="submit" class="btn">登录</button>#}
+            <span style="color: red">{{ error_msg }}</span>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

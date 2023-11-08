@@ -1,0 +1,142 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="{% static 'echarts-5.4.3/dist/echarts.js' %}"></script>
+</head>
+<body>
+<nav class="navbar border-2 border-bottom bg-dark navbar-expand-lg bg-body-tertiary">
+    <div class="container-xl">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'Images/logo.svg' %}" alt="Logo" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            Eye
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills me-auto mb-2 mb-lg-0"></ul>
+            <form class="d-flex  mb-2 mb-lg-0" role="search">
+                <a class="btn  btn-outline-secondary bi bi-github" href="https://github.com/Shadow-Fy/python-web-sql"
+                   target="_blank"
+                   style="--bs-btn-padding-y: 6px; --bs-btn-padding-x:
+                   25px; --bs-btn-font-size: 16px; margin: 10px; height: 70%">&#160Source Code</a>
+                <div class="dropdown" style="display: flex;align-items: center ;">
+                    <button type="button" class="btn link dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false" style="height: 70%;padding-bottom: 3%;padding-top: 3%">
+                        个人中心
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Action two</a></li>
+                        <li><a class="dropdown-item" href="#">退出登录</a></li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+<nav class="navbar border-2 border-bottom navbar-expand-lg bg-body-tertiary">
+    <div class="container-xl">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="/chart/">
+                        <div class="bi bi-house-door">&#160Home</div>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link bi bi-book" href="#">&#160Link</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link active" aria-current="page" href="/chart/admin_list">
+                    <strong class="bi bi bi-book">&#160管理员</strong>
+                    </a>
+
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link bi bi-graph-up" href="/chart/list">&#160数据可视化</a>
+                </li>
+            </ul>
+            <form class="d-flex mb-2 mb-lg-0" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+    </div>
+</nav>
+<br>
+<div class="container-xxl"><h1>这是数据可视化页面</h1></div>
+<br>
+<div class="container">
+    <div style="margin-bottom: 10px">
+        <a class="btn btn-success" href="/chart/admin_list/admin_add">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            加入管理员
+        </a>
+        <div style="float: right; width: 300px;">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索用户名" name="search" value="{{search_data}}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            管理员列表
+        </div>
+        <!-- Table -->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in admin_list %}
+            <tr>
+                <th>{{ obj.id }}</th>
+                <td>{{ obj.username }}</td>
+                <td>********</td>
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/chart/admin_list/{{ obj.id }}/edit">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="/chart/admin_list/{{ obj.id }}/del">删除</a>
+                    <a class="btn btn-warning btn-xs" href="/chart/admin_list/{{ obj.id }}/reset">重置密码</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <ul class="pagination" style="width:100%;">
+        {{ page_string }}
+        {{ search_page }}
+    </ul>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
