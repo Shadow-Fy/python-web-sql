@@ -79,11 +79,11 @@
         <div id="data_img1" style="width: 100%; height: 90%;"></div>
     </div>
     <div><br></div>
-    <div class="container border border-4 rounded" style="float: left;height: 500px;width:58%;">柱状图
+    <div class="container border border-4 rounded"style="height: 800px;width:100%;">柱状图
         <div id="data_img2" style="width: 100%; height: 90%;"></div>
     </div>
-    <div class="container border border-4 rounded" style="float: right;height: 500px;width:40%;">饼状图
-        <div id="data_img3" style="width: 90%; height: 90%;"></div>
+    <div class="container border border-4 rounded" style="height: 800px;width:100%;">饼状图
+        <div id="data_img3" style="width: 100%; height: 90%;"></div>
     </div>
     <script type="text/javascript">
         const myChart1 = echarts.init(document.getElementById('data_img1'));
@@ -125,114 +125,111 @@
           });
     </script>
 <script type="text/javascript">
-    // 基于准备好的 dom，初始化 echarts 实例
-    const myChart2 = echarts.init(document.getElementById('data_img2'));
+  // 定义处理数据并生成柱状图的函数
+  function generateBarChart(movieData) {
+    // 获取电影名、评分数据
+    var movieNames = movieData.map(function (item) {
+      return item.zh_name;
+    });
+    var evalNumbers = movieData.map(function (item) {
+      // 将评价人数的字符串形式转换为数字
+      return parseFloat(item.eval_number.replace('万', '')) * 10000;
+    });
 
-    // 通过 AJAX 请求获取电影数据
-    fetch('/get_movie_data/')
-      .then(response => response.json())
-      .then(data => {
-        const colorPalette = ['#FF0000', '#FF4500', '#FF6347', '#FF7F50', '#FF8C00', '#FFA500', '#FFD700', '#FFEC8B', '#FFE4B5', '#FFDEAD', '#FFEBCD', '#FFEFD5', '#FAEBD7', '#FFE4C4', '#F5DEB3', '#FFF5EE', '#F5F5DC', '#FFFACD', '#F0FFF0', '#F8F8FF', '#F0FFFF', '#F0F8FF', '#F5F5F5', '#FAFAD2', '#DCDCDC', '#D3D3D3', '#C0C0C0', '#A9A9A9', '#808080', '#696969', '#000000', '#FFFFFF'];
+    // 使用 ECharts 绘制柱状图
+    const chart = echarts.init(document.getElementById('data_img2'));
 
-        const option2 = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            legend: {},
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    data: data.map(movie => movie.zh_name),
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    min: 0,  // 设置 Y 轴最小值
-                    max: 500,  // 设置 Y 轴最大值
-                }
-            ],
-            series: [
-                {
-                    name: '评价人数',
-                    type: 'bar',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: data.map(movie => movie.eval_number),
-                    // 设置渐变颜色
-                    itemStyle: {
-                        color: function(params) {
-                            const index = params.dataIndex % colorPalette.length;
-                            return colorPalette[index];
-                        },
-                    },
-                }
-            ]
-        };
+    var option = {
+      title: {
+        text: '电影评分柱状图'
+      },
+      tooltip: {},
+      xAxis: {
+        data: movieNames,
+        axisLabel: {
+          interval: 0,  // 强制显示所有横轴标签
+          rotate: -45    // 倾斜标签使之不重叠
+        }
+      },
+      yAxis: {
+        min: 0,
+        // 如果数据很大，可以根据实际情况调整纵坐标范围
+        // max: 2000000,
+        interval: 250000, // 刻度间隔
+        axisLabel: {
+          formatter: '{value} 人'
+        }
+      },
+      series: [{
+        name: '点评人数',
+        type: 'bar',
+        data: evalNumbers
+      }]
+    };
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart2.setOption(option2);
-      })
-      .catch(error => {
-        console.error('获取电影数据时出错:', error);
-      });
+    // 使用刚指定的配置项和数据显示图表。
+    chart.setOption(option);
+  }
+
+  // 使用 Fetch API 异步获取数据
+  fetch('/get_movie_data')
+    .then(response => response.json())
+    .then(data => {
+      // 数据获取成功后调用生成柱状图的函数
+      generateBarChart(data);
+    })
+    .catch(error => console.error('Error fetching movie data:', error));
 </script>
 
-    <script type="text/javascript">
-    // Initialize echarts instance
-    console.log('图表初始化之前');
 
-    const myChart3 = echarts.init(document.getElementById('data_img3'));
-    console.log('图表初始化之后');
+<script type="text/javascript">
+    // 使用 fetch 获取数据
+fetch('/get_country_count')
+  .then(response => response.json())
+  .then(result => {
+    // 处理数据格式
+    var data = result.map(item => ({
+      name: item.release_country,
+      value: item.country_count,
+    }));
 
-    // Fetch data from Django view
-    fetch('/get_country_count/')
-      .then(response => response.json())
-      .then(data => {
-        const option3 = {
-            legend: {
-                top: 'bottom'
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: {show: true},
-                    dataView: {show: true, readOnly: false},
-                    restore: {show: true},
-                    saveAsImage: {show: true}
-                }
-            },
-            series: [
-                {
-                    name: 'Nightingale Chart',
-                    type: 'pie',
-                    radius: [50, 250],
-                    center: ['50%', '50%'],
-                    roseType: 'area',
-                    itemStyle: {
-                        borderRadius: 8
-                    },
-                    data: data.map(item => ({ value: item.count, name: item.country })),
-                }
-            ]
-        };
+    // 创建 ECharts 实例
+    const myChart = echarts.init(document.getElementById('data_img3'));
 
-        // Set the chart options and data
-        myChart3.setOption(option3);
-      })
-      .catch(error => {
-        console.error('获取每个国家的电影数量时出错:', error);
-      });
+    // 配置南丁格尔图的 ECharts 配置
+    const option = {
+      legend: {
+        top: 'bottom',
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          mark: { show: true },
+          dataView: { show: true, readOnly: false },
+          restore: { show: true },
+          saveAsImage: { show: true },
+        },
+      },
+      series: [
+        {
+          name: 'Nightingale Chart',
+          type: 'pie',
+          radius: [50, 250],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          itemStyle: {
+            borderRadius: 8,
+          },
+          data: data,
+        },
+      ],
+    };
+
+    // 使用配置项配置图表
+    myChart.setOption(option);
+  })
+  .catch(error => console.error('Error fetching data:', error));
+
 </script>
 
 </div>
