@@ -29,4 +29,7 @@ urlpatterns = [
     path('chart/admin_list/<int:nid>/edit', admin.admin_edit),
     path('chart/admin_list/<int:nid>/del', admin.admin_del),
     path('chart/admin_list/<int:nid>/reset', admin.admin_reset),
+    path('get_movie_data/', view.get_movie_data, name='get_movie_data'),
+    path('get_country_count/', view.get_country_count, name='get_country_count'),
+
 ]

@@ -14,6 +14,12 @@ class MoviesInfo(models.Model):
     eval_number = models.CharField(max_length=10)  # 评价人数
     quotation = models.CharField(max_length=50)  # 语录
 
+
+class CountryCount(models.Model):
+    release_country = models.CharField(max_length=30)
+    country_count = models.IntegerField()
+
+
 class Admin(models.Model):
     username = models.CharField(verbose_name="用户名", max_length=32)
     password = models.CharField(verbose_name="密码", max_length=64)

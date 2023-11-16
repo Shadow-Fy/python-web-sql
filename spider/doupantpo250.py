@@ -107,8 +107,8 @@ class DouBan:
             return str(round(int(num)/10000, 1))+"万"
 
     def run(self):
-        for i in range(10):
-            print("正在爬取第<{}>/<{}>页".format(i, 10))
+        for i in range(2):
+            print("正在爬取第<{}>/<{}>页".format(i, 2))
             html = self.dataGet(i*25)
             data = self.dataClean(html)
             self.sqlSave(data)

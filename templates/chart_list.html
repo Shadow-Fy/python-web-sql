@@ -86,79 +86,54 @@
         <div id="data_img3" style="width: 90%; height: 90%;"></div>
     </div>
     <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
         const myChart1 = echarts.init(document.getElementById('data_img1'));
-        // 指定图表的配置项和数据
-        const option1 = {
-            title: {
-                text: 'Stacked Line'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    name: 'Email',
-                    type: 'line',
-                    stack: 'Total',
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: 'Union Ads',
-                    type: 'line',
-                    stack: 'Total',
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: 'Video Ads',
-                    type: 'line',
-                    stack: 'Total',
-                    data: [150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name: 'Direct',
-                    type: 'line',
-                    stack: 'Total',
-                    data: [320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name: 'Search Engine',
-                    type: 'line',
-                    stack: 'Total',
-                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-                }
-            ]
-        };
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart1.setOption(option1);
+        fetch('/get_movie_data/')  // Assuming your URL pattern is /get_movie_data/
+          .then(response => response.json())
+          .then(data => {
+            const option1 = {
+              title: {
+                text: 'Movie Scores Over Time',
+              },
+              tooltip: {
+                trigger: 'axis',
+                formatter: '{b}: {c}',
+              },
+              legend: {
+                data: ['Score'],
+              },
+              xAxis: {
+                type: 'category',
+                data: data.map(movie => movie.release_year),
+              },
+              yAxis: {
+                type: 'value',
+              },
+              series: [
+                {
+                  name: 'Score',
+                  type: 'line',
+                  data: data.map(movie => movie.score),
+                },
+              ],
+            };
+
+            myChart1.setOption(option1);
+          })
+          .catch(error => {
+            console.error('Error fetching movie data:', error);
+          });
     </script>
-    <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        const myChart2 = echarts.init(document.getElementById('data_img2'));
-        // 指定图表的配置项和数据
+<script type="text/javascript">
+    // 基于准备好的 dom，初始化 echarts 实例
+    const myChart2 = echarts.init(document.getElementById('data_img2'));
+
+    // 通过 AJAX 请求获取电影数据
+    fetch('/get_movie_data/')
+      .then(response => response.json())
+      .then(data => {
+        const colorPalette = ['#FF0000', '#FF4500', '#FF6347', '#FF7F50', '#FF8C00', '#FFA500', '#FFD700', '#FFEC8B', '#FFE4B5', '#FFDEAD', '#FFEBCD', '#FFEFD5', '#FAEBD7', '#FFE4C4', '#F5DEB3', '#FFF5EE', '#F5F5DC', '#FFFACD', '#F0FFF0', '#F8F8FF', '#F0FFFF', '#F0F8FF', '#F5F5F5', '#FAFAD2', '#DCDCDC', '#D3D3D3', '#C0C0C0', '#A9A9A9', '#808080', '#696969', '#000000', '#FFFFFF'];
+
         const option2 = {
             tooltip: {
                 trigger: 'axis',
@@ -176,111 +151,54 @@
             xAxis: [
                 {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: data.map(movie => movie.zh_name),
                 }
             ],
             yAxis: [
                 {
-                    type: 'value'
+                    type: 'value',
+                    min: 0,  // 设置 Y 轴最小值
+                    max: 500,  // 设置 Y 轴最大值
                 }
             ],
             series: [
                 {
-                    name: 'Direct',
+                    name: '评价人数',
                     type: 'bar',
                     emphasis: {
                         focus: 'series'
                     },
-                    data: [320, 332, 301, 334, 390, 330, 320]
-                },
-                {
-                    name: 'Email',
-                    type: 'bar',
-                    stack: 'Ad',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name: 'Union Ads',
-                    type: 'bar',
-                    stack: 'Ad',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name: 'Video Ads',
-                    type: 'bar',
-                    stack: 'Ad',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name: 'Search Engine',
-                    type: 'bar',
-                    data: [862, 1018, 964, 1026, 1679, 1600, 1570],
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    markLine: {
-                        lineStyle: {
-                            type: 'dashed'
+                    data: data.map(movie => movie.eval_number),
+                    // 设置渐变颜色
+                    itemStyle: {
+                        color: function(params) {
+                            const index = params.dataIndex % colorPalette.length;
+                            return colorPalette[index];
                         },
-                        data: [[{type: 'min'}, {type: 'max'}]]
-                    }
-                },
-                {
-                    name: 'Baidu',
-                    type: 'bar',
-                    barWidth: 5,
-                    stack: 'Search Engine',
-                    emphasis: {
-                        focus: 'series'
                     },
-                    data: [620, 732, 701, 734, 1090, 1130, 1120]
-                },
-                {
-                    name: 'Google',
-                    type: 'bar',
-                    stack: 'Search Engine',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [120, 132, 101, 134, 290, 230, 220]
-                },
-                {
-                    name: 'Bing',
-                    type: 'bar',
-                    stack: 'Search Engine',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [60, 72, 71, 74, 190, 130, 110]
-                },
-                {
-                    name: 'Others',
-                    type: 'bar',
-                    stack: 'Search Engine',
-                    emphasis: {
-                        focus: 'series'
-                    },
-                    data: [62, 82, 91, 84, 109, 110, 120]
                 }
             ]
         };
 
         // 使用刚指定的配置项和数据显示图表。
         myChart2.setOption(option2);
-    </script>
+      })
+      .catch(error => {
+        console.error('获取电影数据时出错:', error);
+      });
+</script>
+
     <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        const myChart3 = echarts.init(document.getElementById('data_img3'));
-        // 指定图表的配置项和数据
+    // Initialize echarts instance
+    console.log('图表初始化之前');
+
+    const myChart3 = echarts.init(document.getElementById('data_img3'));
+    console.log('图表初始化之后');
+
+    // Fetch data from Django view
+    fetch('/get_country_count/')
+      .then(response => response.json())
+      .then(data => {
         const option3 = {
             legend: {
                 top: 'bottom'
@@ -304,23 +222,19 @@
                     itemStyle: {
                         borderRadius: 8
                     },
-                    data: [
-                        {value: 40, name: 'rose 1'},
-                        {value: 38, name: 'rose 2'},
-                        {value: 32, name: 'rose 3'},
-                        {value: 30, name: 'rose 4'},
-                        {value: 28, name: 'rose 5'},
-                        {value: 26, name: 'rose 6'},
-                        {value: 22, name: 'rose 7'},
-                        {value: 18, name: 'rose 8'}
-                    ]
+                    data: data.map(item => ({ value: item.count, name: item.country })),
                 }
             ]
         };
 
-        // 使用刚指定的配置项和数据显示图表。
+        // Set the chart options and data
         myChart3.setOption(option3);
-    </script>
+      })
+      .catch(error => {
+        console.error('获取每个国家的电影数量时出错:', error);
+      });
+</script>
+
 </div>
 
 
