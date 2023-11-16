@@ -75,14 +75,14 @@
 </nav>
 <div class="container-xxl"><h1>这是数据可视化页面</h1></div>
 <div class="container-xxl">
-    <div class="container border border-4 rounded" style="height: 500px;width:100%;">折线图
+    <div class="container border border-4 rounded" style="height: 500px;width:100%;">
         <div id="data_img1" style="width: 100%; height: 90%;"></div>
     </div>
     <div><br></div>
-    <div class="container border border-4 rounded"style="height: 800px;width:100%;">柱状图
+    <div class="container border border-4 rounded"style="height: 800px;width:100%;">
         <div id="data_img2" style="width: 100%; height: 90%;"></div>
     </div>
-    <div class="container border border-4 rounded" style="height: 800px;width:100%;">饼状图
+    <div class="container border border-4 rounded" style="height: 800px;width:100%;">
         <div id="data_img3" style="width: 100%; height: 90%;"></div>
     </div>
     <script type="text/javascript">
@@ -93,18 +93,19 @@
           .then(data => {
             const option1 = {
               title: {
-                text: 'Movie Scores Over Time',
+                text: '电影评分折线图',
               },
               tooltip: {
                 trigger: 'axis',
                 formatter: '{b}: {c}',
               },
-              legend: {
-                data: ['Score'],
-              },
               xAxis: {
                 type: 'category',
-                data: data.map(movie => movie.release_year),
+                data: data.map(movie => movie.zh_name),
+                axisLabel: {
+                  interval: 0,  // 强制显示所有横轴标签
+                  rotate: -30    // 倾斜标签使之不重叠
+                }
               },
               yAxis: {
                 type: 'value',
@@ -141,14 +142,14 @@
 
     var option = {
       title: {
-        text: '电影评分柱状图'
+        text: '电影点评人数柱状图'
       },
       tooltip: {},
       xAxis: {
         data: movieNames,
         axisLabel: {
           interval: 0,  // 强制显示所有横轴标签
-          rotate: -45    // 倾斜标签使之不重叠
+          rotate: -30    // 倾斜标签使之不重叠
         }
       },
       yAxis: {
