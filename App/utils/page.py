@@ -71,34 +71,34 @@ class PAGE(object):
         page_str_list = list()
         self.query_dict.setlist(self.page_param, [1])
         # 首页
-        page_str_list.append('<li><a href="?{}">首页</a></li>'.format(self.query_dict.urlencode()))
+        page_str_list.append('<li><a href="?{}">首页&nbsp</a></li>'.format(self.query_dict.urlencode()))
         # 上一页
         if self.page > 1:
             self.query_dict.setlist(self.page_param, [self.page - 1])
-            prev = '<li><a href="?{}">上一页</a></li>'.format(self.query_dict.urlencode())
+            prev = '<li><a href="?{}">上一页&nbsp</a></li>'.format(self.query_dict.urlencode())
         else:
             self.query_dict.setlist(self.page_param, [1])
-            prev = '<li><a href="?{}">上一页</a></li>'.format(self.query_dict.urlencode())
+            prev = '<li><a href="?{}">上一页&nbsp</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(prev)
         # 展示页
         for i in range(start_page, end_page + 1):
             self.query_dict.setlist(self.page_param, [i])
             if i == self.page:
-                ele = '<li class="active"><a href="?{}">{}</a></li>'.format(self.query_dict.urlencode(), i)
+                ele = '<li class="active"><a href="?{}">{}&nbsp</a></li>'.format(self.query_dict.urlencode(), i)
             else:
                 ele = '<li><a href="?{}">{}</a></li>'.format(self.query_dict.urlencode(), i)
             page_str_list.append(ele)
         # 下一页
         if self.page < self.total_page_count:
             self.query_dict.setlist(self.page_param, [self.page + 1])
-            nex = '<li><a href="?{}">下一页</a></li>'.format(self.query_dict.urlencode())
+            nex = '<li><a href="?{}">&nbsp下一页</a></li>'.format(self.query_dict.urlencode())
         else:
             self.query_dict.setlist(self.page_param, [self.total_page_count])
-            nex = '<li><a href="?{}">下一页</a></li>'.format(self.query_dict.urlencode())
+            nex = '<li><a href="?{}">&nbsp下一页</a></li>'.format(self.query_dict.urlencode())
         page_str_list.append(nex)
         # 尾页
         self.query_dict.setlist(self.page_param, [self.total_page_count])
-        page_str_list.append('<li><a href="?{}">尾页</a></li>'.format(self.query_dict.urlencode()))
+        page_str_list.append('<li><a href="?{}">&nbsp尾页&nbsp</a></li>'.format(self.query_dict.urlencode()))
         # 需要mark_safe后html才接受
         page_string = mark_safe("".join(page_str_list))
         return page_string

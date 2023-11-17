@@ -50,11 +50,8 @@
             <ul class="nav nav-pills me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link " href="/chart/">
-                        <div class="bi bi-house-door">&#160Home</div>
+                        <div class="bi bi-house-door">&#160主页</div>
                     </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link bi bi-book" href="#">&#160Link</a>
                 </li>
                 <li class="nav-item ">
                     <a class="nav-link active" aria-current="page" href="/chart/admin_list">
@@ -90,7 +87,7 @@
                     {{ field }}
                     <span style="color:red;">{{ field.errors.0 }}</span>
                 </div>
-                {% endfor %}
+                {% endfor %}<br>
                 <button type="submit" class="btn btn-primary">提 交</button>
             </form>
         </div>
