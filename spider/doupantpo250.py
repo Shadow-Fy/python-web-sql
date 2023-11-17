@@ -67,11 +67,11 @@ class DouBan:
         self.cursor.execute("create database if not exists test")
         self.cursor.execute("use test")
         try:
-            self.cursor.execute("drop table app_moviesinfo")
+            self.cursor.execute("drop table App_moviesinfo")
         except:
             pass
         sql = '''
-                create table if not exists app_moviesinfo (
+                create table if not exists App_moviesinfo (
                 id int unsigned auto_increment,
                 `zh_name` varchar(15),      # 中文名
                 `en_name` varchar(70),      # 英文名
@@ -90,7 +90,7 @@ class DouBan:
 
     def sqlSave(self, datas:list):
         sql = '''
-                insert into app_moviesinfo (
+                insert into App_moviesinfo (
                 `zh_name`, `en_name`, `another_name`, `director`, `actor`, `release_year`, `release_country`, `type`, `score`, `eval_number`, `quotation`
                 ) value("{}", "{}", "{}", "{}", "{}", {}, "{}", "{}", "{}", "{}", "{}")
             '''
