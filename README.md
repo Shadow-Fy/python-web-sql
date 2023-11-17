@@ -4,6 +4,14 @@
 
 使用 Python 进行爬虫爬取一些数据，然后利用百度开源的纯 Javascript 图表库 ECharts 对数据进行可视化，利用 Django 将数据展示在Web中。
 
+## 项目运行前的工作
+
+首先运行下列命令加载运行项目所需要的库
+
+```
+python install -r requirements.txt
+```
+
 
 
 ### 数据库操作：
