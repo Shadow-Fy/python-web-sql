@@ -1,0 +1,5 @@
+-i https://pypi.tuna.tsinghua.edu.cn/simple
+Django~=4.2.7
+Pillow~=10.1.0
+PyMySQL~=1.1.0
+requests~=2.31.0
